@@ -1,8 +1,8 @@
---[[ Get the nearest vehicle ]]--
+-- Get the nearest vehicle
 function GetNearestVehicle(player)
 	local vehicles = GetStreamedVehiclesForPlayer(player)
 	local found = 0
-	local nearest_dist = 999999.9
+	local nearest_dist = 999999
 	local x, y, z = GetPlayerLocation(player)
 
 	for _,v in pairs(vehicles) do
@@ -14,4 +14,27 @@ function GetNearestVehicle(player)
 		end
 	end
 	return found, nearest_dist
+end
+
+-- Send requests to database
+function SendRequest(request, ...)
+	local args = {...} -- all the args
+	local count = #args
+
+	local prepare = false
+	if count == 0 then
+		prepare = mariadb_prepare(request)
+	elseif count == 1 then
+		prepare = mariadb_prepare(request, args[1])
+	elseif count == 2 then
+		prepare = mariadb_prepare(request, args[1], args[2])
+	elseif count == 3 then
+		prepare = mariadb_prepare(request, args[1], args[2], args[3])
+	elseif count == 4 then
+		prepare = mariadb_prepare(request, args[1], args[2], args[3], args[4])
+	end
+	if not prepare then return false end
+
+	local query = mariadb_query(SQLConnexion, prepare)
+	return query -- return query or false if fail
 end
