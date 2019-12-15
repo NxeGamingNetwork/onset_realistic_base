@@ -1,7 +1,8 @@
 local vehiclesData = {}
 
+
 -- Create a specified vehicle
-function createVehicle(player, model)
+function createVehicle(player, model, nitro)
 	if model == nil then
 		return AddPlayerChat(player, "Please specify a model (1-12) : /veh 1")
 	end
@@ -20,7 +21,11 @@ function createVehicle(player, model)
 	end
 
 	SetVehicleLicensePlate(vehicle, "RealisticBase")
-	-- AttachVehicleNitro(vehicle, true)
+	nitro = tobool(nitro)
+	if type(nitro) ~= "bool" then nitro = false end -- Set default value to false
+	if nitro then
+		AttachVehicleNitro(vehicle, true)
+	end
 
 	if model == 8 then
 		-- Set Ambulance blue color and license plate text
@@ -37,6 +42,7 @@ AddCommand("v", createVehicle)
 AddCommand("veh", createVehicle)
 AddCommand("vehicle", createVehicle)
 AddCommand("vehicule", createVehicle)
+
 
 -- Lock/Unlock system
 local function lockSystem(player)

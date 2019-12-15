@@ -1,5 +1,8 @@
--- Add owner on starting package
-local function addOwner()
-    SendRequest("SELECT * FROM players WHERE steamid='?' AND name='?'", 5, 9)
+-- Add owner in the database
+local function addOwner(player)
+    local plyId = GetPlayerSteamId(player)
+    if RealisticBase.SteamIDOwner ~= tostring(plyId) then return end
+
+    SendRequest("UPDATE players SET admin=3 WHERE steamid='?'", RealisticBase.SteamIDOwner)
 end
-AddEvent("OnPackageStart", addOwner)
+AddEvent("OnPlayerJoin", addOwner)
