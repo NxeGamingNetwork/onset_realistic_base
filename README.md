@@ -1,4 +1,4 @@
-# Realistic RolePlay Base | Onset gamemode
+# Realistic RolePlay Base | Onset Framework
 A realistic rolepaly base for Onset roleplaying.
 
 ## Features
