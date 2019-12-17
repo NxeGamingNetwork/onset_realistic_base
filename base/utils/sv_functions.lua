@@ -17,33 +17,19 @@ function GetNearestVehicle(player)
 end
 
 
--- Send requests to database
-function SendRequest(request, ...)
-	local args = {...} -- all the args
-	local count = #args
-
-	local prepare = false
-	if type(args) ~= "table" or #args <= 1 then
-		prepare = mariadb_prepare(request)
-	elseif count == 1 then
-		prepare = mariadb_prepare(request, args[1])
-	elseif count == 2 then
-		prepare = mariadb_prepare(request, args[1], args[2])
-	elseif count == 3 then
-		prepare = mariadb_prepare(request, args[1], args[2], args[3])
-	elseif count == 4 then
-		prepare = mariadb_prepare(request, args[1], args[2], args[3], args[4])
-	end
-	if not prepare then return false end
-
-	local query = mariadb_query(SQLConnexion, prepare)
-	return query -- return query or false if fail
+-- Get player SteamID
+function GetID(player)
+	local steamid = GetPlayerSteamId(player)
+	if steamid == nil then return false end
+	return tostring(steamid)
 end
 
 
 -- Check if a player is an administrator
 function CheckAdmin(player)
-	local steamId = GetPlayerSteamId(player)
-	local query = SendRequest("SELECT admin FROM players WHERE steamid='?'", tostring(steamid))
-	print(query)
+	if not IsValidPlayer(player) then return end
+	local steamId = GetID(player)
+	local query = mariadb_prepare(SQLConnection, "SELECT admin FROM players WHERE steamid='?'", steamid)
+	query = mariadb_query(SQLConnection, query)
+	return query
 end

@@ -5,12 +5,15 @@
         "config/sv_config.lua",
 		"base/sql/connect_db.lua",
 		"base/utils/sv_functions.lua",
+		"base/utils/lua_refresh.lua",
+		"base/joining/server.lua",
 		"base/vehicles/server.lua",
 		"base/admin/server.lua"
 	],
 	"client_scripts": [
 		"base/vehicles/client.lua",
-		"base/admin/client.lua"
+		"base/admin/client.lua",
+		"base/joining/welcome_message.lua"
 	],
 	"files": []
 }

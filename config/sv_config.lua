@@ -10,3 +10,8 @@ RealisticBase.Name = "realistic_base" -- Database name (/!\)
 
 -- SteamID64 of the server owner (https://steamidfinder.com/lookup/)
 RealisticBase.SteamIDOwner = "76561198161920297"
+
+-- Message to show when the player join the server
+RealisticBase.MsgToShow = "Welcome on WasiedRP ! Have a good time in our servers and don't forget to read the rules !"
+-- The time the message will be shown (seconds)
+RealisticBase.StayTime = 10
