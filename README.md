@@ -18,7 +18,7 @@ A realistic rolepaly base for Onset roleplaying.
 5. Start your server and have fun !
 
 ## Requirements
-# <a href="https://github.com/OnfireNetwork/i18n"><b>i18n</b></a>
-# <a href="https://github.com/OnfireNetwork/dialogui"><b>dialogui</b></a>
+<h3 href="https://github.com/OnfireNetwork/i18n"><b>i18n</b></h3>
+<h3 href="https://github.com/OnfireNetwork/dialogui"><b>dialogui</b></h3>
 
 ## Events availables
