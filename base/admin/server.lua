@@ -1,8 +1,7 @@
--- Add owner in the database
-local function addOwner(player)
-    local plyId = GetPlayerSteamId(player)
-    if RealisticBase.SteamIDOwner ~= tostring(plyId) then return end
-
-    SendRequest("UPDATE players SET admin=3 WHERE steamid='?'", RealisticBase.SteamIDOwner)
+-- Send net when command
+local function openAdminMenu(player)
+    CallRemoteEvent(player, "OpenAdminMenu")
 end
-AddEvent("OnPlayerJoin", addOwner)
+AddCommand("admin", openAdminMenu)
+AddCommand("admin_menu", openAdminMenu)
+AddCommand("amenu", openAdminMenu)
