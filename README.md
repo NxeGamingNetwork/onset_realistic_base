@@ -1,5 +1,5 @@
 # Realistic RolePlay Base | Onset Framework
-A realistic rolepaly base for Onset roleplaying.
+A realistic roleplay base for Onset roleplaying.
 
 ## Features
 - Easy configuration file
