@@ -15,17 +15,17 @@ local function teleportPlayer()
 end
 
 local function onSubmit(frame, button, ...)
-  if admin ~= nil then
-    if frame == 0 then
-      local args = {...}
+	if admin ~= nil then
+    	if frame == 0 then
+			local args = {...}
 
-      if button == 1 then
-        teleportPlayer()
-      end
-    else
-      -- continue here
-    end 
-  end
+			if button == 1 then
+				teleportPlayer()
+			end
+    	else
+    		-- continue here
+    	end 
+	end
 end
 AddEvent("OnDialogSubmit", onSubmit)
 
@@ -34,21 +34,22 @@ AddEvent("OnDialogSubmit", onSubmit)
 
 -- Noclip keys system
 local binds = {
-  ["Z"] = true,
-  ["Space Bar"] = true,
-  ["Left Ctrl"] = true,
-  ["Left Shift"] = true
+	["Z"] = true,
+	["Space Bar"] = true,
+	["Left Ctrl"] = true,
+	["Left Shift"] = true
 }
 local function onKeyPress(key)
-  if binds[key] or key == "V" then
-    CallRemoteEvent("KeyPressNoclip", key, true)
-  end
+	if binds[key] or key == "V" then
+		CallRemoteEvent("KeyPressNoclip", key, true)
+	end
 end
 AddEvent("OnKeyPress", onKeyPress)
+
 local function onKeyRelease(key)
-  AddPlayerChat(key)
-  if binds[key] then
-    CallRemoteEvent("KeyPressNoclip", key, false)
-  end
+	AddPlayerChat(key)
+	if binds[key] then
+		CallRemoteEvent("KeyPressNoclip", key, false)
+	end
 end
 AddEvent("OnKeyRelease", onKeyRelease)

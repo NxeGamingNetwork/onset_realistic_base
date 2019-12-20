@@ -29,7 +29,12 @@ end
 function CheckAdmin(player)
 	if not IsValidPlayer(player) then return end
 	local steamId = GetID(player)
-	local query = mariadb_prepare(SQLConnection, "SELECT admin FROM players WHERE steamid='?'", steamid)
-	query = mariadb_query(SQLConnection, query)
-	return query
+	local query = mariadb_prepare(SQLConnection, "SELECT admin FROM players WHERE steamid='?'", steamId)
+	query = mariadb_query(SQLConnection, query, function()
+		if query ~= false then
+			local value = mariadb_get_assoc(1)
+			return value			
+		end
+	end)
+	return false
 end
