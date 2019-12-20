@@ -23,6 +23,7 @@ local function noclipSystem()
         if #noclip < 1 then return end
 
         for id,v in pairs(noclip) do
+            if not IsValidPlayer(id) then return end 
             local heading = GetPlayerHeading(id)
             local vecX, vecY = math.cos(heading * math.pi / 180), math.sin(heading * math.pi / 180)
 
@@ -87,7 +88,7 @@ AddRemoteEvent("KeyPressNoclip", noclipPos)
 
 -- Remove from the table when quitting
 local function removeFromNoclip(player)
-    if type(noclip[player]) == table then
+    if type(noclip[player]) == "table" then
         noclip[player] = nil
     end
 end
