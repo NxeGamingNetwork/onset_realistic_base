@@ -15,3 +15,6 @@ RealisticBase.SteamIDOwner = "76561198161920297"
 RealisticBase.MsgToShow = "Welcome on WasiedRP ! Have a good time in our servers and don't forget to read the rules !"
 -- The time the message will be shown (seconds)
 RealisticBase.StayTime = 10
+
+-- Vitesse du noclip
+RealisticBase.Noclip = 5

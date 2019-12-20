@@ -8,7 +8,8 @@
 		"base/utils/lua_refresh.lua",
 		"base/joining/server.lua",
 		"base/vehicles/server.lua",
-		"base/admin/server.lua"
+		"base/admin/server.lua",
+		"base/weapons/server.lua"
 	],
 	"client_scripts": [
 		"base/vehicles/client.lua",

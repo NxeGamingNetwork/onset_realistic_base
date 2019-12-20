@@ -1,6 +1,5 @@
 local vehiclesData = {}
 
-
 -- Create a specified vehicle
 function createVehicle(player, model, nitro)
 	if model == nil then
@@ -21,7 +20,6 @@ function createVehicle(player, model, nitro)
 	end
 
 	SetVehicleLicensePlate(vehicle, "RealisticBase")
-	nitro = tobool(nitro)
 	if type(nitro) ~= "bool" then nitro = false end -- Set default value to false
 	if nitro then
 		AttachVehicleNitro(vehicle, true)

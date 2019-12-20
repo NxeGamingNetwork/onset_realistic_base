@@ -1,4 +1,5 @@
 local Dialog = ImportPackage("dialogui") -- UI Lib
+Dialog.setGlobalTheme("saitama")
 local frame = 0
 local admin
 
@@ -27,3 +28,27 @@ local function onSubmit(frame, button, ...)
   end
 end
 AddEvent("OnDialogSubmit", onSubmit)
+
+
+--[[ Events section ]]--
+
+-- Noclip keys system
+local binds = {
+  ["Z"] = true,
+  ["Space Bar"] = true,
+  ["Left Ctrl"] = true,
+  ["Left Shift"] = true
+}
+local function onKeyPress(key)
+  if binds[key] or key == "V" then
+    CallRemoteEvent("KeyPressNoclip", key, true)
+  end
+end
+AddEvent("OnKeyPress", onKeyPress)
+local function onKeyRelease(key)
+  AddPlayerChat(key)
+  if binds[key] then
+    CallRemoteEvent("KeyPressNoclip", key, false)
+  end
+end
+AddEvent("OnKeyRelease", onKeyRelease)
