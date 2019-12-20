@@ -14,7 +14,6 @@ local moves = {
     ["Left Ctrl"] = false,
     ["Left Shift"] = false
 }
--- Test
 
 -- Noclip movement system
 local function noclipSystem()
@@ -75,3 +74,11 @@ local function noclipPos(player, key, bool)
     noclip[player][key] = bool
 end
 AddRemoteEvent("KeyPressNoclip", noclipPos)
+
+-- Remove from the table when quitting
+local function removeFromNoclip(player)
+    if type(noclip[player]) == table then
+        noclip[player] = nil
+    end
+end
+AddEvent("OnPlayerQuit", removeFromNoclip)
