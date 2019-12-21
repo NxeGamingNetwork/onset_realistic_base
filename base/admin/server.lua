@@ -1,9 +1,6 @@
 --[[ Admin menu system ]]--
 -- Send net when command
 local function openAdminMenu(player)
-<<<<<<< HEAD
-    CallRemoteEvent(player, "OpenAdminMenu", GetAllPlayers())
-=======
     if not CheckAdmin(player) then return AddPlayerChat(player, "<span color=\"#cc1111\">You don't have enough permissions to do this !</>") end
 
     -- Plys names
@@ -15,7 +12,6 @@ local function openAdminMenu(player)
     end
 
     CallRemoteEvent(player, "OpenAdminMenu", plysName, RealisticBase.PositionsNames)
->>>>>>> db03b881331e6f35de973b84bfc685913d2449b3
 end
 AddCommand("admin", openAdminMenu)
 AddCommand("admin_menu", openAdminMenu)

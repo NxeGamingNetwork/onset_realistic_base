@@ -20,9 +20,6 @@ RealisticBase.StayTime = 10
 RealisticBase.NoclipSpeed = 35
 
 -- Auto-deployment of the parachute when starting to fall (true/false)
-<<<<<<< HEAD
-RealisticBase.AutoParachute = true
-=======
 RealisticBase.AutoParachute = true
 
 -- Positions availables in the admin menu
@@ -37,4 +34,3 @@ RealisticBase.PositionsNames = {
     [2] = "Little town 1",
     [3] = "New city"
 }
->>>>>>> db03b881331e6f35de973b84bfc685913d2449b3

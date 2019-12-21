@@ -1,20 +1,9 @@
-<<<<<<< HEAD
-=======
 --[[ Admin Menu ]]--
 
->>>>>>> db03b881331e6f35de973b84bfc685913d2449b3
 -- Vars & imports
 local Dialog = ImportPackage("dialogui") -- UI Lib
 Dialog.setGlobalTheme("saitama")
 local admin = Dialog.create("Admin menu", nil, "Teleport a player", "Go to a player", "Go to a place", "Enable/Disable Noclip", "Send an global advert", "Leave")
-<<<<<<< HEAD
-local teleportMenu = Dialog.create("Teleport a player", "Choose a player to bring any player to you !", nil, "Bring the player", "Leave")
-Dialog.addSelect(teleportMenu, 1, "Players list", 8)
-
--- Create the admin menu
-local function adminMenu(plys)
-	Dialog.setSelectLabeledOptions(teleportMenu, 1, 1, plys)
-=======
 local teleportMenu = Dialog.create("Teleport a player", "Choose a player to bring any player to you !", nil, "Bring the player", "Back")
 Dialog.addSelect(teleportMenu, 1, "Players list", 8)
 local gotoMenu = Dialog.create("Goto a player", "Choose the player you want to goto.", nil, "Goto the player", "Back")
@@ -29,7 +18,6 @@ local function adminMenu(plys, posList)
 	Dialog.setSelectLabeledOptions(teleportMenu, 1, 1, plys)
 	Dialog.setSelectLabeledOptions(gotoMenu, 1, 1, plys)
 	Dialog.setSelectLabeledOptions(goPosMenu, 1, 1, posList)
->>>>>>> db03b881331e6f35de973b84bfc685913d2449b3
 	Dialog.show(admin)
 end
 AddRemoteEvent("OpenAdminMenu", adminMenu)
@@ -39,14 +27,6 @@ local function onSubmit(frame, button, ...)
 	if admin ~= nil then
 		local args = {...}
 		if frame == admin then
-<<<<<<< HEAD
-			if button == 1 then
-				Dialog.hide(admin)
-				Dialog.show(teleportMenu)
-			end
-		elseif frame == teleportMenu then
-			-- nothing to see here
-=======
 			Dialog.hide(admin)
 			if button == 1 then
 				Dialog.show(teleportMenu)
@@ -91,7 +71,6 @@ local function onSubmit(frame, button, ...)
 				Dialog.hide(alertMenu)
 				Dialog.show(admin)
 			end
->>>>>>> db03b881331e6f35de973b84bfc685913d2449b3
 		end
 	end
 end
