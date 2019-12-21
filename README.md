@@ -7,6 +7,7 @@ A realistic roleplay base for Onset roleplaying.
 ## Features
 - Easy configuration file
 - Automatic creation of database tables
+- A usefull administrator menu (w/ noclip & teleport...)
 - Vehicles and weapons spawn command
 - Lock/Unlocking vehicle system
 - Basic jobs (Delivery, Police Officer...)
