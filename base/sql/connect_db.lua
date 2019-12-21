@@ -1,7 +1,7 @@
 -- Don't touch
 SQLConnection = false
 local try = 1
-local createTable = "CREATE TABLE IF NOT EXISTS `players` (`id` int(11) NOT NULL AUTO_INCREMENT, `steamid` varchar(255) NOT NULL, `name` text NOT NULL DEFAULT '\"\"', `money` int(11) DEFAULT 0, `bank_money` int(11) NOT NULL DEFAULT 1000, `position` text NOT NULL DEFAULT '\"\"', `model` text NOT NULL DEFAULT '\"\"', `admin` int(11) NOT NULL DEFAULT 0, `health` int(11) NOT NULL DEFAULT 100, `armor` int(11) NOT NULL DEFAULT 0, `thirst` int(11) NOT NULL DEFAULT 100, `stamina` int(11) NOT NULL DEFAULT 100, `hunger` int(11) NOT NULL DEFAULT 100, `inventory` text NOT NULL DEFAULT '\"\"', `weapons` text NOT NULL DEFAULT '\"\"', PRIMARY KEY (`id`), UNIQUE KEY `steamidindex` (`steamid`)) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;"
+local createTable = "CREATE TABLE IF NOT EXISTS `players` (`id` int(11) NOT NULL AUTO_INCREMENT, `steamid` varchar(255) NOT NULL, `name` varchar(255) NOT NULL DEFAULT '[[]]', `money` int(11) DEFAULT 0, `bank_money` int(11) NOT NULL DEFAULT 1000, `position` varchar(255) NOT NULL DEFAULT '[[]]', `model` varchar(255) NOT NULL DEFAULT '[[]]', `admin` int(11) NOT NULL DEFAULT 0, `health` int(11) NOT NULL DEFAULT 100, `armor` int(11) NOT NULL DEFAULT 0, `thirst` int(11) NOT NULL DEFAULT 100, `stamina` int(11) NOT NULL DEFAULT 100, `hunger` int(11) NOT NULL DEFAULT 100, `inventory` varchar(255) NOT NULL DEFAULT '[[]]', `weapons` varchar(255) NOT NULL DEFAULT '[[]]', PRIMARY KEY (`id`), UNIQUE KEY `steamidindex` (`steamid`)) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;"
 
 -- Connect to database when the package is starting
 local function connect_db()

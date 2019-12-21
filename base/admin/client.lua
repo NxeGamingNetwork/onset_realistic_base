@@ -1,24 +1,32 @@
+-- Vars & imports
 local Dialog = ImportPackage("dialogui") -- UI Lib
 Dialog.setGlobalTheme("saitama")
 local frame = 0
 local admin
 
-local function adminMenu()
+-- Create the admin menu
+local function adminMenu() -- frame=0
     admin = Dialog.create("Admin menu", "", "Teleport a player", "Go to a player", "Go to a place", "Enable/Disable Noclip", "Send an global advert", "Leave")
     frame = 0
     Dialog.show(admin)
 end
 AddRemoteEvent("OpenAdminMenu", adminMenu)
 
-local function teleportPlayer()
-
+-- Teleport a player
+local function teleportPlayer() -- frame=1
+	AddPlayerChat("salut à tous les amis c'est the Kairi")
+	local menu = Dialog.create("Teleport a player", "Choose a player to bring any player to you !")
+	frame = 1
+	Dialog.show(menu)
 end
 
+-- When a button is pressed
 local function onSubmit(frame, button, ...)
 	if admin ~= nil then
     	if frame == 0 then
 			local args = {...}
 
+			AddPlayerChat(button)
 			if button == 1 then
 				teleportPlayer()
 			end
@@ -47,7 +55,6 @@ end
 AddEvent("OnKeyPress", onKeyPress)
 
 local function onKeyRelease(key)
-	AddPlayerChat(key)
 	if binds[key] then
 		CallRemoteEvent("KeyPressNoclip", key, false)
 	end

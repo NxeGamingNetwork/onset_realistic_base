@@ -21,5 +21,3 @@ RealisticBase.Noclip = 5
 
 -- Auto-deployment of the parachute when starting to fall (true/false)
 RealisticBase.AutoParachute = true
-
--- TEst
