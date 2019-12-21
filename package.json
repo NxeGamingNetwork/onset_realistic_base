@@ -11,7 +11,8 @@
 		"base/admin/server.lua",
 		"base/weapons/server.lua",
 		"base/player/server.lua",
-		"base/spawn/server.lua"
+		"base/spawn/server.lua",
+		"base/utils/json.lua"
 	],
 	"client_scripts": [
 		"base/vehicles/client.lua",

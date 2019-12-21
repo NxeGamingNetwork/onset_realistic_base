@@ -1,0 +1,55 @@
+#main-menu {
+    background-color: rgba(0, 0, 0, 0.5);
+
+    width: 100%;
+    height: 100%;
+}
+
+#menu-title {
+    color: white;
+    text-align: center;
+    padding-top: 30px;
+}
+
+#characterSelect {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-gap: 100px;
+    grid-auto-rows: 400px;
+    grid-template-areas: 
+        "a a a a b b b b c c c c d d d d"
+        "a a a a b b b b c c c c d d d d";
+    align-items: start;
+}
+
+.character-select {
+    background-color: rgba(0, 0, 0, 0.5);
+
+    width: 400px;
+    height: 75%;
+
+    margin-top: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#characterSelect .s-1 {
+    grid-area: a;
+}
+
+#characterSelect .s-2 {
+    grid-area: b;
+}
+
+#characterSelect .s-3 {
+    grid-area: c;
+}
+
+#characterSelect .s-4 {
+    grid-area: d;
+}
+
+.character-select .title {
+    color: white;
+    text-align: center;
+}

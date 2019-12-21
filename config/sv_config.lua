@@ -39,3 +39,12 @@ RealisticBase.SpawnPoses = {
     ["New City"] = {x=-176235, y=-43373, z=1128},
     ["Little town"] = {x=42695, y=134974, z=1567}
 }
+
+RealisticBase.hairsColor = {
+    blond = { 250, 240, 190, 1 },
+    black = { 0, 0, 0, 1 },
+    red = { 255, 0, 0, 1 },
+    brown = { 139, 69, 19, 1 }
+}
+
+RealisticBase.MaxCharacters = 3
