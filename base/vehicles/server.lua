@@ -49,6 +49,20 @@ AddCommand("veh", createVehicle)
 AddCommand("vehicle", createVehicle)
 AddCommand("vehicule", createVehicle)
 
+-- Repair vehicle system
+local function repairVehicle(player)
+	local vehicle = GetPlayerVehicle(player)
+	if not IsValidVehicle(vehicle) then return AddPlayerChat(player, "You have to be in a vehicle to do this !") end
+
+	for i=1, 8 do
+		SetVehicleDamage(vehicle, i, 0)
+	end
+	SetVehicleHealth(vehicle, 5000)
+	StartVehicleEngine(vehicle)
+	AddPlayerChat(player, "Vehicle repaired.")
+end
+AddCommand("rep", repairVehicle)
+AddCommand("repair", repairVehicle)
 
 -- Lock/Unlock system
 local function lockSystem(player)
