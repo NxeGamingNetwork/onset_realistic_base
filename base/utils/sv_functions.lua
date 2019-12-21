@@ -30,11 +30,8 @@ function CheckAdmin(player)
 	if not IsValidPlayer(player) then return end
 	local steamId = GetID(player)
 	local query = mariadb_prepare(SQLConnection, "SELECT admin FROM players WHERE steamid='?'", steamId)
-	query = mariadb_query(SQLConnection, query, function()
-		if query ~= false then
-			local value = mariadb_get_assoc(1)
-			return value			
-		end
-	end)
-	return false
+	query = mariadb_query(SQLConnection, query)
+	return query -- /!\ add advanced permission system here : on a juste return true si il est trouvé, mais ça veut dire que même si t'es pas admin bah t'es quand même considéré comme.
+	-- il faut donc récupérer la valeur de la colonne admin et vérifier qu'elle est supérieur à 0, grade joueur
+	-- rappels des grades : 0-user | 1-moderator | 2-admin | 3-superadmin
 end

@@ -17,7 +17,24 @@ RealisticBase.MsgToShow = "Welcome on WasiedRP ! Have a good time in our servers
 RealisticBase.StayTime = 10
 
 -- Noclip speed
-RealisticBase.Noclip = 5
+RealisticBase.NoclipSpeed = 35
 
 -- Auto-deployment of the parachute when starting to fall (true/false)
+<<<<<<< HEAD
 RealisticBase.AutoParachute = true
+=======
+RealisticBase.AutoParachute = true
+
+-- Positions availables in the admin menu
+RealisticBase.Positions = {
+    [1] = {x=126885, y=78414, z=2064},
+    [2] = {x=42695, y=134974, z=1567},
+    [3] = {x=-176235, y=-43373, z=1128}
+}
+-- The name of the ID position
+RealisticBase.PositionsNames = {
+    [1] = "Pump station",
+    [2] = "Little town 1",
+    [3] = "New city"
+}
+>>>>>>> db03b881331e6f35de973b84bfc685913d2449b3
