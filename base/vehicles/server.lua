@@ -1,4 +1,11 @@
-local vehiclesData = {}
+-- Setup vehicle data
+function setupVehicleData(vehicle, player)
+	if not IsValidPlayer(player) then player = nil end
+	if (GetVehiclePropertyValue(vehicle, "owner") ~= nil) or (GetVehiclePropertyValue(vehicle, "locked") ~= nil) then return end
+
+	SetVehiclePropertyValue(vehicle, "owner", player, true)
+	SetVehiclePropertyValue(vehicle, "locked", true, true)
+end
 
 -- Create a specified vehicle
 function createVehicle(player, model, nitro)
@@ -33,6 +40,7 @@ function createVehicle(player, model, nitro)
 
     -- Make player enter
 	SetPlayerInVehicle(player, vehicle)
+	setupVehicleData(vehicle, player)
 
 	AddPlayerChat(player, "Vehicle spawned !")
 end
@@ -46,21 +54,15 @@ AddCommand("vehicule", createVehicle)
 local function lockSystem(player)
 	local vehicle = GetNearestVehicle(player)
 	if not IsValidVehicle(vehicle) then return end
+	setupVehicleData(vehicle, player)
+	
+	local value = not GetVehiclePropertyValue(vehicle, "locked")
+	SetVehiclePropertyValue(vehicle, "locked", value, true)
 
-	-- if doesn't exists, then insert the first player
-	if vehiclesData[vehicle] ~= nil then
-		vehiclesData[vehicle] = {
-			["owner"] = player,
-			["locked"] = true
-		}
-	end
-
-	if vehiclesData[vehicle]["locked"] then
-		vehiclesData[vehicle]["locked"] = false
-		AddPlayerChat(player, "Vous avez dévérouillé votre véhicule !")
+	if value then
+		AddPlayerChat(player, "Vehicle locked.")
 	else
-		vehiclesData[vehicle]["locked"] = true
-		AddPlayerChat(player, "Vous avez vérouillé votre véhicule !")
+		AddPlayerChat(player, "Vehicle unlocked.")
 	end
 end
 AddRemoteEvent("lockSystemEvent", lockSystem)
