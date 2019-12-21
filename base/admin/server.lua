@@ -1,6 +1,6 @@
 -- Send net when command
 local function openAdminMenu(player)
-    CallRemoteEvent(player, "OpenAdminMenu")
+    CallRemoteEvent(player, "OpenAdminMenu", GetAllPlayers())
 end
 AddCommand("admin", openAdminMenu)
 AddCommand("admin_menu", openAdminMenu)

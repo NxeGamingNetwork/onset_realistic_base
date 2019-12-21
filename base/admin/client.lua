@@ -1,38 +1,29 @@
 -- Vars & imports
 local Dialog = ImportPackage("dialogui") -- UI Lib
 Dialog.setGlobalTheme("saitama")
-local frame = 0
-local admin
+local admin = Dialog.create("Admin menu", nil, "Teleport a player", "Go to a player", "Go to a place", "Enable/Disable Noclip", "Send an global advert", "Leave")
+local teleportMenu = Dialog.create("Teleport a player", "Choose a player to bring any player to you !", nil, "Bring the player", "Leave")
+Dialog.addSelect(teleportMenu, 1, "Players list", 8)
 
 -- Create the admin menu
-local function adminMenu() -- frame=0
-    admin = Dialog.create("Admin menu", "", "Teleport a player", "Go to a player", "Go to a place", "Enable/Disable Noclip", "Send an global advert", "Leave")
-    frame = 0
-    Dialog.show(admin)
+local function adminMenu(plys)
+	Dialog.setSelectLabeledOptions(teleportMenu, 1, 1, plys)
+	Dialog.show(admin)
 end
 AddRemoteEvent("OpenAdminMenu", adminMenu)
-
--- Teleport a player
-local function teleportPlayer() -- frame=1
-	AddPlayerChat("salut à tous les amis c'est the Kairi")
-	local menu = Dialog.create("Teleport a player", "Choose a player to bring any player to you !")
-	frame = 1
-	Dialog.show(menu)
-end
 
 -- When a button is pressed
 local function onSubmit(frame, button, ...)
 	if admin ~= nil then
-    	if frame == 0 then
-			local args = {...}
-
-			AddPlayerChat(button)
+		local args = {...}
+		if frame == admin then
 			if button == 1 then
-				teleportPlayer()
+				Dialog.hide(admin)
+				Dialog.show(teleportMenu)
 			end
-    	else
-    		-- continue here
-    	end 
+		elseif frame == teleportMenu then
+			-- nothing to see here
+		end
 	end
 end
 AddEvent("OnDialogSubmit", onSubmit)
