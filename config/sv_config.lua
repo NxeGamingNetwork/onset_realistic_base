@@ -34,3 +34,8 @@ RealisticBase.PositionsNames = {
     [2] = "Little town 1",
     [3] = "New city"
 }
+
+RealisticBase.SpawnPoses = {
+    ["New City"] = {x=-176235, y=-43373, z=1128},
+    ["Little town"] = {x=42695, y=134974, z=1567}
+}
