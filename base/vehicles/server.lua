@@ -9,6 +9,8 @@ end
 
 -- Create a specified vehicle
 function createVehicle(player, model, nitro)
+	if not CheckAdmin(player) then return AddPlayerChat(player, "<span color=\"#cc1111\">You don't have enough permissions to do this !</>") end
+	
 	if model == nil then
 		return AddPlayerChat(player, "Please specify a model (1-12) : /veh 1")
 	end
@@ -51,6 +53,7 @@ AddCommand("vehicule", createVehicle)
 
 -- Repair vehicle system
 local function repairVehicle(player)
+	if not CheckAdmin(player) then return AddPlayerChat(player, "<span color=\"#cc1111\">You don't have enough permissions to do this !</>") end
 	local vehicle = GetPlayerVehicle(player)
 	if not IsValidVehicle(vehicle) then return AddPlayerChat(player, "You have to be in a vehicle to do this !") end
 

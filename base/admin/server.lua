@@ -118,9 +118,12 @@ local function enableNoclip(player, multi)
     if type(noclip[player]) == "table" then -- then disable noclip
         noclip[player] = nil
         AddPlayerChat(player, "Noclip disabled.")
+        CallRemoteEvent(player, "setNoclipClient", false)
     else -- then enable noclip
+        if not CheckAdmin(player) then return end
         noclip[player] = moves
         AddPlayerChat(player, "Noclip enabled.")
+        CallRemoteEvent(player, "setNoclipClient", true)
         local xx,yy,zz = GetPlayerLocation(player)
         noclip[player]["location"] = {x=xx, y=yy, z=zz}
     end
@@ -131,6 +134,7 @@ AddRemoteEvent("enableNoclipping", enableNoclip)
 -- Noclip binds system
 local function noclipPos(player, key, bool)
     if not IsValidPlayer(player) then return end
+    if not CheckAdmin(player) then return end
     
     if key == "V" then 
         enableNoclip(player)

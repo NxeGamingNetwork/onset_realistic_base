@@ -78,8 +78,15 @@ AddEvent("OnDialogSubmit", onSubmit)
 
 
 --[[ Events section ]]--
+local noclip = false
 
--- Noclip keys system
+-- Set noclip true
+local function setNoclipClient(bool)
+	noclip = bool
+end
+AddRemoteEvent("setNoclipClient", setNoclipClient)
+
+-- Noclip binds system
 local binds = {
 	["Z"] = true,
 	["Space Bar"] = true,
@@ -87,14 +94,14 @@ local binds = {
 	["Left Shift"] = true
 }
 local function onKeyPress(key)
-	if binds[key] or key == "V" then
+	if (binds[key] && not noclip) or key == "V" then
 		CallRemoteEvent("KeyPressNoclip", key, true)
 	end
 end
 AddEvent("OnKeyPress", onKeyPress)
 
 local function onKeyRelease(key)
-	if binds[key] then
+	if binds[key] && not noclip then
 		CallRemoteEvent("KeyPressNoclip", key, false)
 	end
 end
