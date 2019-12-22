@@ -32,17 +32,19 @@ local Models = {
     }
 }
 
-AddEvent("OnPackageStop", function() -- Refresh and server stop
+AddEvent("OnSqlConnectionClosed", function() -- Refresh and server stop
     for k,v in pairs(GetAllPlayers()) do
         SavePlayerData(k)
     end
-    print("All players data saved !")
+    print("[RealisticBase] All players data saved !")
 end)
 
-AddEvent("OnPackageStart", function() -- Handle refresh
-    for k,v in pairs(GetAllPlayers()) do
-        PlayerAuth(k)
-    end
+AddEvent("OnSqlConnectionOpened", function() -- Handle refresh, need to recreate all data after a refresh
+    Delay(1000, function()
+        for k,v in pairs(GetAllPlayers()) do
+            PlayerAuth(k)
+        end
+    end)
 end)
 
 function SavePlayerData(player)
@@ -50,7 +52,18 @@ function SavePlayerData(player)
     if Players[player] == nil then return end
 
     local x,y,z = GetPlayerLocation(player)
-    Players[player].position = x .. " " .. y.. " " .. z
+    Players[player].position = tostring(x) .. " " .. tostring(y) .. " " .. tostring(z)
+
+    Players[player].weapons = {}
+    for i=1, 3 do
+        local weap, ammo = GetPlayerWeapon(player, i)
+        if weap ~= 1 then
+            table.insert(Players[player].weapons, {
+                id = weap,
+                ammo = ammo
+            })
+        end
+    end
 
     local query = mariadb_prepare(SQLConnection, "UPDATE players SET name = '?', money = ?, bank_money = ?, position = '?', model = '?', admin = ?, health = ?, armor = ?, thirst = ?, stamina = ?, hunger = ?, inventory = '?', weapons = '?' WHERE steamid = '?' AND profile_id = ? LIMIT 1;",
         -- VALUES
@@ -71,7 +84,7 @@ function SavePlayerData(player)
         tostring(GetPlayerSteamId(player)), math.tointeger(Players[player].profile_id))
     mariadb_query(SQLConnection, query)
     
-    print("Saved Data of "..GetPlayerName(player).." - "..GetPlayerSteamId(player))
+    print("[RealisticBase] Saved Data of "..GetPlayerName(player).." - "..GetPlayerSteamId(player))
 end
 
 function PlayerAuth(player)
@@ -80,10 +93,16 @@ function PlayerAuth(player)
 end
 AddEvent("OnPlayerSteamAuth", PlayerAuth)
 
+AddEvent("OnPlayerJoin", function(player)
+	SetPlayerSpawnLocation(player, 125773.000000, 80246.000000, 1645.000000, 90.0)
+end)
+
 AddEvent("OnPlayerQuit", function(player)
     SavePlayerData(player)
-    Players[player] = nil
-    Profiles[player] = nil
+    Delay(500, function()
+        Players[player] = nil
+        Profiles[player] = nil
+    end)
 end)
 
 function IntroducePlayer(player)
@@ -113,6 +132,16 @@ function PlayerChooseProfile(player, profile_id)
 end
 AddRemoteEvent("PlayerChooseProfile", PlayerChooseProfile)
 
+function ComputePlayerPos(text_pos)
+    if text_pos == nil then return {} end
+
+    local comput_pPos = {}
+    for i in string.gmatch(text_pos, "%S+") do
+        if comput_pPos.x == nil then comput_pPos.x = i elseif comput_pPos.y == nil then comput_pPos.y = i elseif comput_pPos.z == nil then comput_pPos.z = i end
+    end
+    return comput_pPos
+end
+
 function CreatePlayerData(player, profile_id)
     if mariadb_get_row_count() == 0 then AddPlayerChat(player, "Error with the database, please contact the server owner !") PlayerAuth(player) return end
 
@@ -130,6 +159,7 @@ function CreatePlayerData(player, profile_id)
         ["thirst"] = true,
         ["stamina"] = true,
         ["hunger"] = true,
+        ["admin"] = true
     }
 
     for k,v in pairs(infos) do
@@ -145,11 +175,18 @@ function CreatePlayerData(player, profile_id)
     -- TODO: Set the player thirst, hunger, stamina
 
     SetPlayerCothe(player, player)
+    local ws = 1
+    for k,v in pairs(Players[player].weapons) do
+        if v.id ~= nil and v.ammo ~= nil and v.id ~= 1 then
+            SetPlayerWeapon(player, v.id, v.ammo, false, ws, true)
+            ws = ws + 1
+        end
+    end
 
-    print("Data created for player "..GetPlayerName(player).." - "..GetPlayerSteamId(player))
+    print("[RealisticBase] Data created for player "..GetPlayerName(player).." - "..GetPlayerSteamId(player))
 
     local toPos = RealisticBase.SpawnPoses
-    toPos["Last Position"] = Players[player].position
+    toPos["Last Position"] = true
     CallRemoteEvent(player, "ShowSpawnMenu", toPos)
 end
 
@@ -157,28 +194,22 @@ AddRemoteEvent("ServerPlayerSpawn", function(player, pos)
     if Players[player].spawned then return end -- Protection
     if RealisticBase.SpawnPoses[pos] == nil and pos ~= "Last Position" then
         local toPos = RealisticBase.SpawnPoses
-        toPos["Last Position"] = Players[player].position
+        toPos["Last Position"] = true
         CallRemoteEvent(player, "ShowSpawnMenu", toPos)
         return
     end
 
     local poses = RealisticBase.SpawnPoses[pos]
     if pos == "Last Position" then
-        local a = Players[player].location
-        local r = {}
-        for i in string.gmatch(a, "%S+") do
-            if r.x == nil then r.x = i elseif r.y == nil then r.y = i elseif r.z == nil then r.z = i end
-        end
-        if r.x == nil or r.y == nil or r.z == nil then
+        local a = ComputePlayerPos(Players[player].position)
+        if a.x == nil or a.y == nil or a.z == nil then
             AddPlayerChat(player, "Invalid last positions !")
-            local toPos = RealisticBase.SpawnPoses
-            toPos["Last Position"] = Players[player].position
-            CallRemoteEvent(player, "ShowSpawnMenu", toPos)
+            CallRemoteEvent(player, "ShowSpawnMenu", RealisticBase.SpawnPoses)
             return
-        end
+        else poses = a end
     end
 
-    SetPlayerLocation(player, RealisticBase.SpawnPoses[pos].x, RealisticBase.SpawnPoses[pos].y, RealisticBase.SpawnPoses[pos].z)
+    SetPlayerLocation(player, poses.x, poses.y, poses.z)
     
     Players[player].spawned = true
 end)
@@ -212,18 +243,6 @@ end)
 AddRemoteEvent("ServerGetClothe", function(player)
     CallRemoteEvent(player, "ClientSetClothe", Models.shirtsModel, Models.pantsModel, Models.shoesModel, Models.hairsModel, RealisticBase.hairsColor)
 end)
-function dump(o)
-    if type(o) == 'table' then
-       local s = '{ '
-       for k,v in pairs(o) do
-          if type(k) ~= 'number' then k = '"'..k..'"' end
-          s = s .. '['..k..'] = ' .. dump(v) .. ','
-       end
-       return s .. '} '
-    else
-       return tostring(o)
-    end
- end
 
 function SetPlayerCothe(player, playerTo)
     if not Players[playerTo] then return end
@@ -239,3 +258,14 @@ function SetPlayerCothe(player, playerTo)
     CallRemoteEvent(player, "ClientChangeClothing", playerTo, 5, Players[playerTo].model["shoesModel"], 0, 0, 0, 0)
 end
 AddRemoteEvent("ServerGetOtherPlayerCothe", SetPlayerCothe)
+
+
+function cmd_w(player, weapon, slot, ammo)
+	if (weapon == nil or slot == nil or ammo == nil) then
+		return AddPlayerChat(player, "Usage: /w <weapon> <slot> <ammo>")
+	end
+
+	SetPlayerWeapon(player, weapon, ammo, true, slot, true)
+end
+AddCommand("w", cmd_w)
+AddCommand("weapon", cmd_w)
