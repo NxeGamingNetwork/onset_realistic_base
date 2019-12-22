@@ -94,14 +94,14 @@ local binds = {
 	["Left Shift"] = true
 }
 local function onKeyPress(key)
-	if (binds[key] && not noclip) or key == "V" then
+	if (binds[key] and not noclip) or key == "V" then
 		CallRemoteEvent("KeyPressNoclip", key, true)
 	end
 end
 AddEvent("OnKeyPress", onKeyPress)
 
 local function onKeyRelease(key)
-	if binds[key] && not noclip then
+	if binds[key] and not noclip then
 		CallRemoteEvent("KeyPressNoclip", key, false)
 	end
 end
