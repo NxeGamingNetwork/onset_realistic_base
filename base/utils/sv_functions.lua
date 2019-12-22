@@ -27,11 +27,15 @@ end
 
 -- Check if a player is an administrator
 function CheckAdmin(player)
-	if not IsValidPlayer(player) then return end
+	--[[if not IsValidPlayer(player) then return end
 	local steamId = GetID(player)
 	local query = mariadb_prepare(SQLConnection, "SELECT admin FROM players WHERE steamid='?'", steamId)
 	query = mariadb_query(SQLConnection, query)
 	return query -- /!\ add advanced permission system here : on a juste return true si il est trouvé, mais ça veut dire que même si t'es pas admin bah t'es quand même considéré comme.
 	-- il faut donc récupérer la valeur de la colonne admin et vérifier qu'elle est supérieur à 0, grade joueur
-	-- rappels des grades : 0-user | 1-moderator | 2-admin | 3-superadmin
+	-- rappels des grades : 0-user | 1-moderator | 2-admin | 3-superadmin]]
+
+	if not IsValidPlayer(player) then return false end
+	if not Players[player] then return false end
+	return Players[player].admin > 0 or tostring(GetPlayerSteamId(player)) == RealisticBase.SteamIDOwner 
 end
