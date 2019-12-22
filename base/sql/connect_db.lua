@@ -25,6 +25,8 @@ local function connect_db()
     else
         print("[RealisticBase] Database "..RealisticBase.Host.." successfully connected !")
 
+        CallEvent("OnSqlConnectionOpened", SQLConnection)
+
         local query = mariadb_prepare(SQLConnection, "SHOW TABLES LIKE '?';", "players")
         mariadb_query(SQLConnection, query, CheckPlayerTable) -- Check if players table exists
     end
@@ -41,7 +43,7 @@ end
 -- Stop when stoping package
 local function disconnect_db()
     if not SQLConnection then return end
-    CallEvent("OnSqlConnectionClosed")
+    CallEvent("OnSqlConnectionClosed", SQLConnection)
     Delay(1000, function()
         mariadb_close(SQLConnection)
     end)
