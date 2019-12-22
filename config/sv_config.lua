@@ -48,3 +48,9 @@ RealisticBase.hairsColor = {
 }
 
 RealisticBase.MaxCharacters = 3
+
+RealisticBase.AnnouncementColors = {
+    color_blue = "#1854b5",
+    color_red = "#c21117",
+    color_green = "#11c21d"
+}

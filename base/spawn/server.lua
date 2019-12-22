@@ -214,12 +214,6 @@ AddRemoteEvent("ServerPlayerSpawn", function(player, pos)
     Players[player].spawned = true
 end)
 
-function tablelength(T)
-    local count = 0
-    for _ in pairs(T) do count = count + 1 end
-    return count
-end
-
 AddRemoteEvent("ServerNewProfile", function(player, infos)
     local model = {}
     for k,v in pairs(infos) do
