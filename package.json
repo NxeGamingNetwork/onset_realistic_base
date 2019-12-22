@@ -14,7 +14,8 @@
 		"base/spawn/server.lua",
 		"base/utils/json.lua",
 		"base/utils/utils.lua",
-		"base/announcements/server.lua"
+		"base/announcements/server.lua",
+		"base/atm/server.lua"
 	],
 	"client_scripts": [
 		"base/vehicles/client.lua",
@@ -23,7 +24,9 @@
 		"base/joining/welcome_message.lua",
 		"base/spawn/client.lua",
 		"base/utils/utils.lua",
-		"base/announcements/client.lua"
+		"base/announcements/client.lua",
+		"base/atm/client.lua",
+		"base/fpv/client.lua"
 	],
 	"files": []
 }
