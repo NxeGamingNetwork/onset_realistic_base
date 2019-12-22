@@ -41,6 +41,9 @@ end
 -- Stop when stoping package
 local function disconnect_db()
     if not SQLConnection then return end
-    mariadb_close(SQLConnection)
+    CallEvent("OnSqlConnectionClosed")
+    Delay(1000, function()
+        mariadb_close(SQLConnection)
+    end)
 end
 AddEvent("OnPackageStop", disconnect_db)
