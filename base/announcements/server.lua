@@ -3,7 +3,7 @@ Announcements = {}
 AddEvent("OnSqlConnectionOpened", function() -- Handle refresh, need to recreate all data after a refresh
     Delay(1000, function()
         local query = mariadb_prepare(SQLConnection, "SELECT * FROM announcements;")
-        mariadb_query(SQLConnection, query, SaveAnnouncements)
+        mariadb_async_query(SQLConnection, query, SaveAnnouncements)
     end)
 end)
 
